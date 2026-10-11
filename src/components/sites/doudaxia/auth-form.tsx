@@ -87,7 +87,11 @@ export function AuthForm({
           submit();
         }}
       >
-        <img className="dx-login-logo" src="/sites/doudaxia/login-logo.png" alt="抖大侠 微信小店助手" />
+        <div className="dx-login-brand">
+          <img src="/brand/qunxing-mark.png" alt="" />
+          <strong>群兴尚品</strong>
+          <span>微信小店助手</span>
+        </div>
         <div className="dx-login-tabs">
           {mode === "login" ? (
             <>
@@ -190,7 +194,7 @@ export function AuthForm({
           <div className="dx-modal" onClick={(event) => event.stopPropagation()}>
             <h3 style={{ marginTop: 0 }}>用户协议</h3>
             <p>
-              使用抖大侠微信小店助手前，请确认你已获得店铺授权，并遵守微信小店与 1688 的平台规范。账号、订单和采购数据仅用于本店铺的下单、发货和售后。
+              使用群兴尚品微信小店助手前，请确认你已获得店铺授权，并遵守微信小店与 1688 的平台规范。账号、订单和采购数据仅用于本店铺的下单、发货和售后。
             </p>
             <p className="dx-muted">完整协议文本以源站弹窗为准。</p>
             <button

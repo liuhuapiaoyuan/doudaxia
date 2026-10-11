@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "抖大侠",
-    template: "抖大侠 - %s",
+    default: "群兴尚品",
+    template: "%s - 群兴尚品",
   },
-  description: "抖大侠微信小店助手",
-  icons: { icon: "/sites/doudaxia/logo.png" },
+  description: "群兴尚品微信小店助手",
+  icons: { icon: "/brand/qunxing-mark.png" },
 };
 
 export default function RootLayout({

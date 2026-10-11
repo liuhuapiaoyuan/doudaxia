@@ -168,7 +168,9 @@ export function ChartPage() {
 
   return (
     <div className={`dx-dash${full ? " is-full" : ""}`} ref={rootRef}>
-      <div className="dx-dash-banner" />
+      <div className="dx-dash-banner">
+        <img src="/sites/doudaxia/charts-header-qx.png?v=4" alt="兴链数据大屏" />
+      </div>
       <div className="dx-dash-body">
         <div className="dx-dash-toolbar">
           <button className="dx-dash-shop" type="button">

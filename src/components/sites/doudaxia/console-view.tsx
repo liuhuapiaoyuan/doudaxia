@@ -88,7 +88,7 @@ const pages: Record<string, () => ReactNode> = {
 export function ConsoleView({ slug }: { slug: string }) {
   useEffect(() => {
     const title = pageTitles[slug] || batchTools.find((tool) => tool.href === `/${slug}`)?.title || "页面未找到";
-    document.title = `抖大侠 - ${title}`;
+    document.title = `${title} - 群兴尚品`;
   }, [slug]);
 
   const Page = pages[slug];

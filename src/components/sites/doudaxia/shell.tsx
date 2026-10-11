@@ -84,32 +84,28 @@ function ShellInner({ authed, children }: { authed: boolean; children: ReactNode
   return (
     <div className="dx-shell">
       <header className="dx-header">
-        <Link href="/order-list">
-          <img className="dx-brand" src="/sites/doudaxia/header-brand.gif" alt="抖大侠 微信小店助手" />
+        <Link className="dx-brand-link" href="/order-list">
+          <img className="dx-mark" src="/brand/qunxing-mark.png" alt="" />
+          <span className="dx-brand-copy">
+            <span className="dx-brand-name">群兴尚品</span>
+            <span className="dx-brand-sub">微信小店助手</span>
+          </span>
         </Link>
         <div className="dx-header-right">
-          <a className="dx-pill" href="https://www.yuque.com/51doudaxia/hum8gg/tzvlubmkgnxx2l1f" target="_blank" rel="noreferrer">
-            <img src="/sites/doudaxia/icon-video.svg" alt="" />
-            <span>视频教程</span>
-          </a>
-          <button className="dx-pill" type="button" onClick={() => toast("客服小侠 13751176564")}>
+          <button className="dx-pill" type="button" onClick={() => toast("请通过企业微信联系群兴尚品客服")}>
             <img src="/sites/doudaxia/icon-kefu.svg" alt="" />
             <span>联系客服</span>
           </button>
           <Link className="dx-pill" href="/order-address">
             <span>发货/退货异常</span>
           </Link>
-          <a className="dx-pill" href="https://www.51doudaxia.com" target="_blank" rel="noreferrer">
-            <img src="/sites/doudaxia/icon-pc.svg" alt="" />
-            <span>下载PC端</span>
-          </a>
-          <a className="dx-pill" href="https://www.51doudaxia.com" target="_blank" rel="noreferrer">
-            <img src="/sites/doudaxia/icon-app.svg" alt="" />
-            <span>下载APP</span>
-          </a>
           <div className="dx-user">
             <button className="dx-user" type="button" onClick={() => setUserOpen((v) => !v)}>
-              <img className="dx-user-shop" src="/sites/doudaxia/icon-shop.svg" alt="" />
+              <span className="dx-user-shop" aria-hidden>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" />
+                </svg>
+              </span>
               <span className="dx-user-meta">
                 <span className="dx-user-phone">186****4143</span>
                 <span className="dx-user-shopname">当前店铺：群兴小铺</span>
