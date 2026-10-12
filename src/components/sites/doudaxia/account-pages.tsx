@@ -7,76 +7,86 @@ import { PageTabs, Pager, QuotaBar, useToast } from "@/components/sites/doudaxia
 
 export function HomePage() {
   const [range, setRange] = useState("今日");
+  const storeMetrics = [
+    ["销量", "4", "blue"],
+    ["销售额（总）", "18.60", "blue"],
+    ["平台补贴", "1.10", "blue"],
+    ["退款量", "0", "red"],
+    ["退款额", "0.00", "red"],
+    ["退款率", "0%", "red"],
+  ];
+  const purchaseMetrics = [
+    ["采购量", "3", "green"],
+    ["销售额（已采购）", "16.86", "green"],
+    ["采购成本", "16.80", "green"],
+    ["运费/运费险", "7.30", "green"],
+    ["预估利润", "0.06", "green"],
+    ["预估利润率", "0.4%", "green"],
+  ];
   return (
-    <div className="dx-page">
-      <div className="dx-card">
-        <div className="dx-filters">
-          <b style={{ fontSize: 18 }}>186****4143</b>
-          <span className="dx-muted">ID：495854</span>
-          <span>绑定店铺：1/500 个</span>
-        </div>
-      </div>
-      <h3 className="dx-section-title">微店统计</h3>
-      <div className="dx-stats">
-        {[
-          ["销量", "4"],
-          ["销售额（总）", "21.54"],
-          ["平台补贴", "3.00"],
-          ["退款量", "0"],
-          ["退款额", "0.00"],
-          ["退款率", "0%"],
-        ].map(([label, value]) => (
-          <div className="dx-stat" key={label}>
-            <em>{label}</em>
-            <strong>{value}</strong>
+    <div className="home-page">
+      <main className="home-main">
+        <section className="home-profile card">
+          <div className="home-avatar" aria-hidden="true"><span>◉_◉</span></div>
+          <div>
+            <div className="home-profile-name">186****4143 <span>ID：495854</span><button type="button" className="home-refresh" aria-label="刷新账户">↻</button></div>
+            <div className="home-profile-sub">绑定店铺：1/500 个</div>
           </div>
-        ))}
-      </div>
-      <div className="dx-card">
-        <div className="dx-filters">
-          <b>采购统计</b>
-          {["今日", "昨日", "7日", "30日"].map((item) => (
-            <button key={item} className={`dx-status${range === item ? " active" : ""}`} type="button" onClick={() => setRange(item)}>{item}</button>
-          ))}
-          <span className="dx-muted">按成交时间</span>
-        </div>
-        <div className="dx-stats" style={{ marginTop: 12 }}>
-          {[
-            ["采购量", "0"],
-            ["销售额（已采购）", "0.00"],
-            ["采购成本", "0.00"],
-            ["运费/运费险", "0.00"],
-            ["预估利润", "0.00"],
-            ["预估利润率", "0%"],
-          ].map(([label, value]) => (
-            <div className="dx-stat" key={label}><em>{label}</em><strong>{value}</strong></div>
-          ))}
-        </div>
-      </div>
-      <div className="dx-two">
-        <div className="dx-card">
-          <b>群兴小铺 当前店铺</b>
-          <div className="dx-kv" style={{ marginTop: 10 }}>一键下单：2026-10-15 <span className="dx-orange">还剩 5 天</span> <a className="dx-link" href="https://store.weixin.qq.com/shop/servicemarket/detail?serviceId=4444279944260616194" target="_blank" rel="noreferrer">去续订</a></div>
-          <div className="dx-kv">商品搬家：2026-11-07 <span className="dx-green">还剩 28 天</span> <a className="dx-link" href="https://store.weixin.qq.com/shop/servicemarket/detail?serviceId=4444280086028140555" target="_blank" rel="noreferrer">去续订</a></div>
-          <div className="dx-kv">在售商品：0 件　待关联货源 0 件</div>
-          <div className="dx-kv">全部货源：122 件　待关联退货地址 122 个</div>
-          <div className="dx-kv">厂家数量：59 件　待关联退货地址 59 个</div>
-          <div className="dx-kv">采购账号：1 个　异常 0 个</div>
-          <div className="dx-kv">退货异常：0 笔</div>
-        </div>
-        <div className="dx-card">
-          <div className="dx-filters"><b>销售排行</b><span>今日 · 按销售</span></div>
-          {rankGoods.map((item, index) => (
-            <div className="dx-goods" key={item.title} style={{ marginTop: 10 }}>
-              <b>{index + 1}</b>
-              <img className="dx-thumb" src={item.img} alt="" />
-              <div style={{ flex: 1 }}>{item.title}</div>
-              <b>{item.sales}</b>
+        </section>
+
+        <section className="home-stat-card card">
+          <div className="home-card-head">
+            <h3>微店统计</h3>
+            <div className="home-range">
+              {["今日", "昨日", "7日", "30日"].map((item) => (
+                <button key={item} className={range === item ? "active" : ""} type="button" onClick={() => setRange(item)}>{item}</button>
+              ))}
             </div>
+            <button className="home-time" type="button">按成交时间⌄</button>
+          </div>
+          <div className="home-stat-columns">
+            <div className="home-stat-group">
+              {storeMetrics.map(([label, value, color]) => (
+                <div className="home-metric" key={label}><span>{label}</span><strong className={color}>{value}</strong></div>
+              ))}
+            </div>
+            <div className="home-stat-group purchase">
+              {purchaseMetrics.map(([label, value, color]) => (
+                <div className="home-metric" key={label}><span>{label}</span><strong className={color}>{value}</strong></div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="home-income card">
+          <h3>营收走势</h3>
+          <div className="home-chart-legend"><span className="sales">销售额</span><span className="purchased">销售额(已采购)</span><span className="cost">采购成本</span><span className="profit">利润</span></div>
+          <svg className="home-line-chart" viewBox="0 0 650 230" role="img" aria-label="营收走势折线图">
+            <g className="home-grid"><line x1="35" y1="28" x2="630" y2="28" /><line x1="35" y1="72" x2="630" y2="72" /><line x1="35" y1="116" x2="630" y2="116" /><line x1="35" y1="160" x2="630" y2="160" /><line x1="35" y1="204" x2="630" y2="204" /></g>
+            <g className="home-axis"><text x="3" y="32">15.00</text><text x="3" y="76">12.00</text><text x="3" y="120">9.00</text><text x="3" y="164">6.00</text><text x="3" y="208">3.00</text></g>
+            <path className="sales" d="M35 202 C90 196 115 202 150 200 S210 204 240 199 S278 190 290 52 S315 201 365 202 S420 198 458 202 S520 198 565 200 S610 203 630 202" />
+            <path className="purchased" d="M35 204 C90 198 115 203 150 201 S210 206 240 202 S278 194 290 78 S315 204 365 204 S420 199 458 204 S520 200 565 202 S610 205 630 204" />
+            <path className="cost" d="M35 203 C90 202 115 205 150 203 S210 207 240 204 S278 195 290 92 S315 205 365 205 S420 202 458 205 S520 202 565 204 S610 206 630 205" />
+            <path className="profit" d="M35 205 C90 204 115 207 150 205 S210 208 240 206 S278 198 290 111 S315 207 365 207 S420 204 458 207 S520 204 565 206 S610 208 630 207" />
+          </svg>
+        </section>
+      </main>
+
+      <aside className="home-side">
+        <section className="home-shop card">
+          <div className="home-shop-head"><span className="home-shop-icon">▧</span><div><strong>群兴小铺</strong><span>当前店铺　↔</span></div></div>
+          <div className="home-service"><div>一键下单：2026-10-15 <span>还剩 3 天</span> <a href="https://store.weixin.qq.com/shop/servicemarket/detail?serviceId=4444279944260616194" target="_blank" rel="noreferrer">去续订</a></div><div>商品搬家：2026-11-07 <span>还剩 26 天</span> <a href="https://store.weixin.qq.com/shop/servicemarket/detail?serviceId=4444280086028140555" target="_blank" rel="noreferrer">去续订</a></div></div>
+          <div className="home-shop-rows"><div>在售商品：<b>0</b> 件 <span>待关联货源 <b>0</b> 件</span><i>›</i></div><div>全部货源：<b>313</b> 件 <span>待关联退货地址 <em>313</em> 个</span><i>›</i></div><div>厂家数量：<b>114</b> 件 <span>待关联退货地址 <em>114</em> 个</span><i>›</i></div><div>采购账号：<b>1</b> 个 <span>异常 <b>0</b> 个</span><i>›</i></div><div>退货异常：<b>0</b> 笔 <span>退货地址不一致</span><i>›</i></div></div>
+        </section>
+        <section className="home-ranking card">
+          <div className="home-card-head"><h3>销售排行</h3><button className="home-time" type="button">今日⌄</button><button className="home-time" type="button">按销售⌄</button></div>
+          <div className="home-rank-head"><span>排行</span><span>商品</span><span>销售</span></div>
+          {rankGoods.slice(0, 4).map((item, index) => (
+            <div className="home-rank-row" key={item.title}><span className={`home-medal m${index + 1}`}>{index + 1}</span><img src={item.img} alt="" /><div className="home-rank-product"><b><span className="home-goods-tag">微店</span>{item.title}</b><small>▱</small></div><strong>{item.sales}</strong></div>
           ))}
-          <Link className="dx-link" href="/order-sales-rank">查看销量排行明细</Link>
-        </div>
-      </div>
+          <Link className="home-rank-more" href="/order-sales-rank">查看销量排行明细</Link>
+        </section>
+      </aside>
     </div>
   );
 }

@@ -129,6 +129,10 @@ export function ChartPage() {
   const [clock, setClock] = useState("2026-10-10 15:11:51");
   const [left, setLeft] = useState(299);
   const [full, setFull] = useState(false);
+  const [shop, setShop] = useState("群兴小铺");
+  const [shopOpen, setShopOpen] = useState(false);
+  const [startDate, setStartDate] = useState("2026-10-10");
+  const [endDate, setEndDate] = useState("2026-10-10");
   const [trade, setTrade] = useState<"wechat" | "buy">("wechat");
   const [income, setIncome] = useState<"profit" | "refund">("profit");
 
@@ -149,6 +153,11 @@ export function ChartPage() {
 
   const tradeData = trade === "wechat" ? tradeWechat : tradeBuy;
   const incomeData = income === "profit" ? incomeProfit : incomeRefund;
+  const dateLabel = `${Number(startDate.slice(5, 7))}月${Number(startDate.slice(8, 10))}日`;
+  const refreshDashboard = () => {
+    setLeft(299);
+    setClock(new Date().toLocaleString("zh-CN", { hour12: false }).replaceAll("/", "-"));
+  };
   const tradeColors = useMemo(
     () =>
       trade === "buy"
@@ -173,17 +182,26 @@ export function ChartPage() {
       </div>
       <div className="dx-dash-body">
         <div className="dx-dash-toolbar">
-          <button className="dx-dash-shop" type="button">
-            <img src="/sites/doudaxia/icon-shop.svg" alt="" />
-            <span>群兴小铺</span>
-            <i />
-          </button>
-          <div className="dx-dash-range">
-            <input readOnly value="2026-10-10" />
-            <span>至</span>
-            <input readOnly value="2026-10-10" />
+          <div className="dx-dash-shop-wrap">
+            <button className="dx-dash-shop" type="button" aria-expanded={shopOpen} onClick={() => setShopOpen((open) => !open)}>
+              <img src="/sites/doudaxia/icon-shop.svg" alt="" />
+              <span>{shop}</span>
+              <i />
+            </button>
+            {shopOpen && (
+              <div className="dx-dash-shop-menu">
+                <button type="button" className={shop === "群兴小铺" ? "selected" : ""} onClick={() => { setShop("群兴小铺"); setShopOpen(false); }}>群兴小铺</button>
+                <button type="button" className={shop === "全部店铺" ? "selected" : ""} onClick={() => { setShop("全部店铺"); setShopOpen(false); }}>全部店铺</button>
+              </div>
+            )}
           </div>
-          <button className="dx-dash-preset" type="button">今天 <i /></button>
+          <div className="dx-dash-range" aria-label="日期范围">
+            <input type="date" value={startDate} max={endDate} onChange={(event) => setStartDate(event.target.value)} aria-label="开始日期" />
+            <span>至</span>
+            <input type="date" value={endDate} min={startDate} onChange={(event) => setEndDate(event.target.value)} aria-label="结束日期" />
+          </div>
+          <button className="dx-dash-preset" type="button" onClick={() => { setStartDate("2026-10-10"); setEndDate("2026-10-10"); }}>今天 <i /></button>
+          <button className="dx-dash-refresh" type="button" onClick={refreshDashboard} aria-label="刷新数据" title="刷新数据">↻</button>
           <div className="dx-dash-grow" />
           <div className="dx-dash-clock">
             {clock}
@@ -221,7 +239,7 @@ export function ChartPage() {
             <div className="dx-dash-title">
               总交易实时概览 <span>(单)</span>
               <div className="dx-dash-legend">
-                <span className="front">今天 <em>(10月10日)</em></span>
+                <span className="front">今天 <em>({dateLabel})</em></span>
                 <span className="back">昨天 <em>(10月9日)</em></span>
               </div>
               <div className="dx-dash-switch">
@@ -235,7 +253,7 @@ export function ChartPage() {
             <div className="dx-dash-title">
               总交易收益概览 <span>(元)</span>
               <div className={`dx-dash-legend ${income}`}>
-                <span className="front">今天 <em>(10月10日)</em></span>
+                <span className="front">今天 <em>({dateLabel})</em></span>
                 <span className="back">昨天 <em>(10月9日)</em></span>
               </div>
               <div className={`dx-dash-switch ${income}`}>
